@@ -1,86 +1,12 @@
-# ?? Cardiovascular Disease EDA
+Cardiovascular Disease EDA
 
-This repository holds an exploratory data analysis (EDA) of cardiovascular health dataset. The idea is to examine associations of biometric and lifestyle variables with the risk of cardiovascular disease.
+In this project, an exploratory data analysis (EDA) of a cardiovascular health dataset is presented. The aim is to investigate biometric and lifestyle-related parameters and their connection to the possibility of cardiovascular disease.
 
----
+The data contains the records of more than 68000 patients, the features being age (calculated in years after converting days), gender, height, weight, systolic blood pressure, diastolic blood pressure, cholesterol level, glucose level, smoking, alcohol consumption, and physical activity. The target variable is named cardio and takes the value 1 in case a patient is diagnosed with cardiovascular disease.
 
-## ?? Dataset Overview
+In the preprocessing step, columns that were not needed like id and Unnamed: 0 were dropped. The days in the age column were transformed into years to allow easier interpretation. Clearly implausible values of height, weight, and blood pressure were eliminated on medically realistic limits.
 
-The data consists of anonymised information about more than 68,000 patients and it has the following characteristics:
+There are some important steps, which are involved in the analysis. Initially, a univariate analysis was done through the histogram and KDE curves to get insights into the distributions of continuous variables, such as age, weight, and blood pressure. Count plots were used to examine the categorical features including gender, cholesterol, and smoking status to see how these variables were distributed in the data. Bivariate examination used boxplots to compare numeric attributes amid cardiovascular disease and without cardiovascular disease patients and showed that patients with cardiovascular disease (heart disease) tend to be older, heavier, and have higher blood pressure. Also, a correlation matrix was generated to check the relationships among the features revealed moderate correlations of the target variable with systolic blood pressure, age, and cholesterol.
 
-| Feature       | Description                                     |
-|---------------|-------------------------------------------------|
-| `age`         | Age in days (converted to years)                |
-| `gender`      | 1 = Female, 2 = Male                            |
-| `height`      | Height in cm                                    |
-| `weight`      | Weight in kg                                    |
-| `ap_hi`       | Systolic blood pressure                         |
-| `ap_lo`       | Diastolic blood pressure                        |
-| `cholesterol` | 1 = normal, 2 = above normal, 3 = well above    |
-| `gluc`        | Glucose level (same scale as cholesterol)       |
-| `smoke`       | 1 = Smoker, 0 = Non-smoker                      |
-| `alco`        | 1 = Consumes alcohol, 0 = Doesn’t               |
-| `active`      | 1 = Physically active, 0 = Inactive             |
-| `cardio`      | Target variable: 1 = Has cardiovascular disease |
+This repository contains the original dataset, a cleaned copy of it, the Jupyter notebook with the entire EDA workflow, a requirements.txt depencency file, and this README. To execute the analysis, letters needed to run the analysis are installed via pip install -r requirements.txt, and then the notebook file (Cardio_EDA.ipynb) is opened in Jupyter.
 
----
-
-## ?? Data Cleaning
-
-- Dropped redundant columns: `id` and `Unnamed: 0`
-- Converted `age` from days to `age_years`
-- Removed unrealistic entries (outliers) based on:
-  - Height: 100–250 cm
-  - Weight: 30–200 kg
-  - Systolic BP (`ap_hi`): 50–250 mmHg
-  - Diastolic BP (`ap_lo`): 30–200 mmHg
-
----
-
-## ?? Exploratory Data Analysis (EDA)
-
-### 1. ?? **Univariate Analysis: Numerical Features**
-
-Histograms and KDE curves of:
-- **Height** and **Weight**: Right-skewed distributions
-- **Systolic (ap_hi)** and **Diastolic (ap_lo) BP**: Multimodal due to recording practices
-- **Age in years**: Majority between 45 and 60 years
-
-### 2. ?? **Univariate Analysis: Categorical Features**
-
-Plot counts of:
-- `gender`, `cholesterol`, `gluc`, `smoke`, `alco`, `active`, `cardio`
-- Class imbalance is minor in `cardio`, with ~55% showing cardiovascular disease
-
-### 3. ?? **Bivariate Analysis: Numeric Features vs. Cardio**
-
-Boxplots comparing:
-- **Cardio (target)** against continuous variables:
-  - Blood pressure (`ap_hi`, `ap_lo`)
-  - Age, weight, height
-- Findings:
-  - Cardiovascular patients tend to have higher **age**, **weight**, and **blood pressure**
-
-### 4. ?? **Correlation Matrix**
-
-A heatmap of all variable relationships:
-- Strongest correlation: `ap_hi` vs `ap_lo` (**+0.70**)
-- Target `cardio` moderately correlated with:
-  - `ap_hi`: **+0.43**
-  - `age_years`: **+0.24**
-  - `weight`: **+0.18**
-  - `cholesterol`: **+0.22**
-
-![Correlation Matrix](relative/path/to/your/correlation_heatmap.png)
-
----
-
-## ?? Repository Structure
-
-```bash
-cardiovascular-disease-eda/
-??? dataset/
-?   ??? health_data.csv
-??? cleaned_health_data.csv
-??? Cardio_EDA.ipynb
-??? README.md
